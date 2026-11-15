@@ -1,0 +1,15 @@
+services:
+  router:
+    build:
+      context: .
+      dockerfile: router/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      GOOGLE_CLOUD_PROJECT: demo-relate
+      FIRESTORE_EMULATOR_HOST: host.docker.internal:8080
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  worker:
+    context: .
+    dockerfile: worker/Dockerfile

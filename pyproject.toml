@@ -7,7 +7,10 @@ requires-python = ">=3.13"
 dependencies = []
 
 [tool.uv.workspace]
-members = ["worker"]
+members = [
+    "worker",
+    "router",
+]
 
 
 [tool.ruff.lint]

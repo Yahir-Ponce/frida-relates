@@ -1,3 +1,4 @@
+import time
 from typing import Any
 
 from src.services.graph_manager import GraphManager
@@ -31,4 +32,7 @@ class QueryService:
 
         future = executor.submit(run_query)
 
-        return future.result()
+        try:
+            return future.result()
+        finally:
+            graph["last_used"] = time.monotonic()

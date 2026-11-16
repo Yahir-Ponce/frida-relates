@@ -1,29 +1,28 @@
-from fastapi import APIRouter
+from typing import Any, Optional
 
-from services.graph_manager import manager
-from services.query_service import QueryService
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel
+from src.services.graph_manager import manager
+from src.services.query_service import QueryService
 
 router = APIRouter(tags=["Query"])
 
 
+class QueryRequest(BaseModel):
+    query: str
+    params: Optional[dict[str, Any]] = None
+
+
 @router.post("/{id}/query")
-def query(id: str, query: dict):
-
-
-
-@router.get("/test")
-def test():
-
-    from services.graph_manager import manager
-    from services.query_service import QueryService
-
+def query(id: str, request: QueryRequest):
+    if id not in manager.graphs:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Graph {id} not found"
+        )
     query_service = QueryService(manager)
 
-    manager.open_graph("test")
-
-    result = query_service.execute(
-        graph_id="test",
-        cypher="RETURN 1 AS number",
+    return query_service.execute(
+        graph_id=id,
+        cypher=request.query,
+        parameters=request.params or {},
     )
-
-    print(result)

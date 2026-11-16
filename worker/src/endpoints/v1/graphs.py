@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from services.graph_manager import manager
+from src.services.graph_manager import manager
 
 router = APIRouter(tags=["Graphs"])
 

@@ -7,12 +7,7 @@ requires-python = ">=3.13"
 dependencies = []
 
 [tool.uv.workspace]
-members = [
-    "backend/api-router",
-    "backend/api-worker",
-    "worker",
-]
-
+members = ["worker"]
 
 
 [tool.ruff.lint]

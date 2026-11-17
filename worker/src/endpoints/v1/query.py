@@ -10,7 +10,7 @@ router = APIRouter(tags=["Query"])
 
 class QueryRequest(BaseModel):
     query: str
-    params: Optional[dict[str, Any]] = None
+    params: dict[str, Any] | None = None
 
 
 @router.post("/{id}/query")
